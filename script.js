@@ -1,32 +1,43 @@
 function BuscarFilme() {
-    const nomeFilme = document.getElementById("inputFilme").value;
+    const nomeFilme = document.getElementById("inputFilme").value.trim();
     const chaveAPI = "6881d8f3";
 
-    if (!nomeFilme.trim()) {
-        document.getElementById("resultado").innerHTML = "<p>Digite o nome de um filme.</p>";
+    const resultadoDiv = document.getElementById("resultado");
+
+    if (!nomeFilme) {
+        resultadoDiv.innerHTML = "<p>Por favor, digite o nome de um filme.</p>";
         return;
     }
 
     const url = `https://www.omdbapi.com/?t=${encodeURIComponent(nomeFilme)}&apikey=${chaveAPI}&plot=full`;
 
-    fetch(url)
-    .then(res => res.json())
-    .then(dados => {
-        if (dados.Response === "False") { 
-            document.getElementById("resultado").innerHTML = "<p>Filme não encontrado.</p>";
-            return;
-        }
+    resultadoDiv.innerHTML = `<p>Carregando...</p>`; 
 
-        document.getElementById("resultado").innerHTML = `
-            <h2>${dados.Title} (${dados.Year})</h2>
-            <img src="${dados.Poster}" alt="Pôster do filme" style="max-width: 300px;">
-            <p><strong>Diretor:</strong> ${dados.Director}</p>
-            <p><strong>Gênero:</strong> ${dados.Genre}</p>
-            <p><strong>Sinopse:</strong> ${dados.Plot}</p>
-        `;
-    })
-    .catch(erro => {
-        document.getElementById('resultado').innerHTML = `<p>Erro ao buscar o filme.</p>`;
-        console.error(erro);
-    });
+    fetch(url)
+        .then(res => res.json())
+        .then(dados => {
+            if (dados.Response === "False") {
+                resultadoDiv.innerHTML = "<p>Filme não encontrado. Tente novamente.</p>";
+                return;
+            }
+
+         
+            resultadoDiv.innerHTML = `
+                <div class="filme-info">
+                    <h2>${dados.Title} (${dados.Year})</h2>
+                    <div class="filme-detalhes">
+                        <img src="${dados.Poster}" alt="Pôster do filme" class="filme-poster">
+                        <div class="detalhes-texto">
+                            <p><strong>Diretor:</strong> ${dados.Director}</p>
+                            <p><strong>Gênero:</strong> ${dados.Genre}</p>
+                            <p><strong>Sinopse:</strong> ${dados.Plot}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        })
+        .catch(erro => {
+            resultadoDiv.innerHTML = `<p>Ocorreu um erro ao buscar o filme. Tente novamente.</p>`;
+            console.error("Erro ao buscar filme:", erro);
+        });
 }
