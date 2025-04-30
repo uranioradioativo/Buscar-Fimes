@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca De Filmes</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 Busca de Filmes</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Escolha Seu Filme</h1>
-    <input type="text" id="inputFilme" placeholder="Digite o nome do filme">
-    <button onclick="BuscarFilme()">Pesquisar</button>
-
+  <div class="container">
+    <h1>🎬 Escolha Seu Filme</h1>
+    <div class="search-bar">
+      <input
+        type="text"
+        id="inputFilme"
+        placeholder="Digite o nome do filme"
+        aria-label="Nome do filme"
+      />
+      <button onclick="BuscarFilme()">🔍 Pesquisar</button>
+    </div>
     <div id="resultado"></div>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
